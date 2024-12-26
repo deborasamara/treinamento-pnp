@@ -14,7 +14,7 @@ function App() {
       <main className="container" >
         <BrowserRouter>
           <Routes>
-            <Route path="/cadastro" element={<Cadastro />} />
+            <Route path="/cadastrar" element={<Cadastro />} />
             <Route path="/login" element={<Login />} />
             <Route path="/publicacoes" element={<Publicar/>} />
             <Route path="/post" element={<Post/>} />

@@ -15,7 +15,9 @@ const schema = yup.object().shape({
 });
 
 function FormularioLogin() {
-  const { register, handleSubmit, reset} = useForm();
+  const { register, handleSubmit, reset} = useForm({
+    resolver: yupResolver(schema),
+  });
   const navigate = useNavigate();
 
   function handleLogin(values: LoginForm) {

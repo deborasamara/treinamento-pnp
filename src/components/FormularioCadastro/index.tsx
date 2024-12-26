@@ -1,4 +1,38 @@
+import { useForm } from "react-hook-form";
+import axiosInstance from "../../services/axiosInstance";
+import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Ref, useEffect } from "react";
+
+interface RegisterForm {
+  username: string;
+  nome: string;
+  senha: string;
+}
+
+const schema = yup.object().shape({
+  username: yup.string().required(),
+  nome: yup.string().required(),
+  senha: yup.string().required(),
+});
+
 function FormularioCadastro() {
+  const { register, handleSubmit, reset } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const navigate = useNavigate();
+
+  function handleCadastro(values: RegisterForm) {
+    axiosInstance.post("cadastrar/", values)
+    .then((response)=>{
+      navigate("/login/");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  }
+
   return (
     <>
       <div
@@ -12,8 +46,8 @@ function FormularioCadastro() {
             Cadastre-se
           </div>
         </div>
-        <div className="br-modal-body">
-          <form action="" className="forms-register">
+        <form className="forms-register" onSubmit={handleSubmit(handleCadastro)}>
+          <div className="br-modal-body">
             <div className="col-12 mb-3">
               <div className="br-input small">
                 <label htmlFor="input-icon-small">Usuário</label>
@@ -23,9 +57,10 @@ function FormularioCadastro() {
                   </div>
                   <input
                     className="small"
-                    id="input-icon-small"
+                    id="username"
                     type="text"
                     placeholder="Digite um nome de usuário"
+                    {...register("username", { required: true })}
                   />
                 </div>
               </div>
@@ -39,9 +74,10 @@ function FormularioCadastro() {
                   </div>
                   <input
                     className="small"
-                    id="input-icon-small"
+                    id="nome"
                     type="text"
                     placeholder="Digite seu nome"
+                    {...register("nome", { required: true })}
                   />
                 </div>
               </div>
@@ -55,39 +91,24 @@ function FormularioCadastro() {
                   </div>
                   <input
                     className="small"
-                    id="input-icon-small"
-                    type="text"
+                    id="senha"
+                    type="password"
                     placeholder="Digite uma senha"
+                    {...register("senha", { required: true })}
                   />
                 </div>
               </div>
             </div>
-            <div className="mb-3">
-              <div className="br-input small">
-                <label htmlFor="input-icon-small">Confirme a senha</label>
-                <div className="input-group">
-                  <div className="input-icon">
-                    <i className="fas fa-lock" aria-hidden="true"></i>
-                  </div>
-                  <input
-                    className="small"
-                    id="input-icon-small"
-                    type="text"
-                    placeholder="Confirme sua senha"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div className="br-modal-footer justify-content-end">
-          <button className="br-button secondary" type="button">
+          </div>
+          <div className="br-modal-footer justify-content-end">
+          <button className="br-button secondary" type="button" onClick={() => reset()}>
             Limpar
           </button>
-          <button className="br-button primary ml-2" type="button">
+          <button className="br-button primary ml-2" type="submit">
             Cadastrar
           </button>
         </div>
+        </form>
       </div>
     </>
   );

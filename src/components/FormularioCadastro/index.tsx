@@ -36,7 +36,7 @@ function FormularioCadastro() {
   return (
     <>
       <div
-        className="br-modal"
+        className="br-modal container"
         aria-modal="true"
         role="dialog"
         aria-labelledby="modalalerttitle"

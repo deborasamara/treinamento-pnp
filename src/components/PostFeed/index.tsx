@@ -20,10 +20,10 @@ function PostFeed() {
 
   return (
     <>
-      <div className="row">
+      <div className="row d-flex justify-content-center">
         {post.length > 0 ? (
           post.map((post: any, index: number) => (
-            <div className="col-sm-10" key={index} >
+            <div className="col-sm-10" key={index}>
               <div className="br-card">
                 <div className="card-header">
                   <div className="d-flex">
@@ -34,8 +34,17 @@ function PostFeed() {
                     </div>
                   </div>
                 </div>
-                <div className="card-content d-flex">
-                  <p>{post.descricao}</p>
+                <div className="card-content d-flex align-items-top">
+                  <div className="col-4 h-fixed">
+                    <img src={post.imagem} alt="" />
+                  </div>
+                  <div className="col-8">
+                    <p className="">
+                      {post.descricao.length > 600
+                        ? post.descricao.slice(0, 600) + "..."
+                        : post.descricao}
+                    </p>
+                  </div>
                 </div>
                 <div className="card-footer">
                   <div className="d-flex">

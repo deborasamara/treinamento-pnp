@@ -24,13 +24,14 @@ function FormularioCadastro() {
   const navigate = useNavigate();
 
   function handleCadastro(values: RegisterForm) {
-    axiosInstance.post("cadastrar/", values)
-    .then((response)=>{
-      navigate("/login/");
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+    axiosInstance
+      .post("cadastrar/", values)
+      .then((response) => {
+        navigate("/login/");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (
@@ -41,12 +42,15 @@ function FormularioCadastro() {
         role="dialog"
         aria-labelledby="modalalerttitle"
       >
-        <div className="br-modal-header">
-          <div className="modal-title" id="modalalerttitle">
-            Cadastre-se
+        <form
+          className="forms-register"
+          onSubmit={handleSubmit(handleCadastro)}
+        >
+          <div className="br-modal-header">
+            <div className="modal-title" id="modalalerttitle">
+              Cadastre-se
+            </div>
           </div>
-        </div>
-        <form className="forms-register" onSubmit={handleSubmit(handleCadastro)}>
           <div className="br-modal-body">
             <div className="col-12 mb-3">
               <div className="br-input small">
@@ -101,13 +105,17 @@ function FormularioCadastro() {
             </div>
           </div>
           <div className="br-modal-footer justify-content-end">
-          <button className="br-button secondary" type="button" onClick={() => reset()}>
-            Limpar
-          </button>
-          <button className="br-button primary ml-2" type="submit">
-            Cadastrar
-          </button>
-        </div>
+            <button
+              className="br-button secondary"
+              type="button"
+              onClick={() => reset()}
+            >
+              Limpar
+            </button>
+            <button className="br-button primary ml-2" type="submit">
+              Cadastrar
+            </button>
+          </div>
         </form>
       </div>
     </>

@@ -1,9 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../states/authUser";
 import { Link } from "react-router-dom";
 
 function Header() {
-  const { user, isAuthenticated, nome} = useAuth();
+  function clickButton() {
+    console.log("cliquei aqui");
+    setMenuVisible(!menuVisible);
+  }
+
+  const { user, isAuthenticated, nome } = useAuth();
+  const [menuVisible, setMenuVisible] = useState(false);
 
   useEffect(() => {
     console.log("Usuário: ", user);
@@ -57,13 +63,18 @@ function Header() {
                     <div className="header">
                       <div className="title">Acesso Rápido</div>
                     </div>
-                    <Link to="/publicar" className="br-item">Publicar</Link>
-                    <Link to="/feed" className="br-item">Ver feed</Link>
+                    <Link to="/publicar" className="br-item">
+                      Publicar
+                    </Link>
+                    <Link to="/feed" className="br-item">
+                      Ver feed
+                    </Link>
                   </div>
                 </div>
 
                 <div>
                   <button
+                    onClick={clickButton}
                     className="br-sign-in"
                     type="button"
                     id="avatar-dropdown-trigger"
@@ -81,46 +92,44 @@ function Header() {
                       </span>
                     </span>
                     <span className="ml-2 text-gray-80 text-weight-regular">
-                      Olá, <span className="text-weight-semi-bold">{nome}</span>
+                      Olá,{" "}
+                      <span className="text-weight-semi-bold">
+                        {nome || "Fulano"}
+                      </span>
                     </span>
-                    <i className="fas fa-caret-down" aria-hidden="true"></i>
+                    {menuVisible ? (
+                      <i className="fas fa-caret-up" aria-hidden="true"></i>
+                    ) : (
+                      <i className="fas fa-caret-down" aria-hidden="true"></i>
+                    )}
                   </button>
-                  <div
-                    class="br-list"
-                    id="avatar-menu"
-                    hidden="hidden"
-                    role="menu"
-                    aria-labelledby="avatar-dropdown-trigger"
-                  >
-                    <a
-                      className="br-item"
-                      href="javascript:void(0)"
-                      role="menuitem"
+
+                  {menuVisible ? (
+                    <div
+                      className="br-list"
+                      id="avatar-menu"
+                      role="menu"
+                      aria-labelledby="avatar-dropdown-trigger"
                     >
-                      Dados pessoais
-                    </a>
-                    <a
-                      className="br-item"
-                      href="javascript:void(0)"
-                      role="menuitem"
-                    >
-                      Privacidade
-                    </a>
-                    <a
-                      className="br-item"
-                      href="javascript:void(0)"
-                      role="menuitem"
-                    >
-                      Notificações
-                    </a>
-                    <a
-                      className="br-item"
-                      href="javascript:void(0)"
-                      role="menuitem"
-                    >
-                      Perguntas frequentes
-                    </a>
-                  </div>
+                      <a
+                        className="br-item"
+                        href="javascript:void(0)"
+                        role="menuitem"
+                      >
+                        Exemplo de alguma coisa
+                      </a>
+                      <a
+                        className="br-item"
+                        href="javascript:void(0)"
+                        role="menuitem"
+                      >
+                        Exemplo de alguma coisa
+                      </a>
+                      <Link to="/login" className="br-item" role="menuitem">
+                        Sair
+                      </Link>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ) : (

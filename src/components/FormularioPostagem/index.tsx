@@ -7,13 +7,14 @@ import { Ref, useEffect } from "react";
 
 interface registerPost {
   titulo: string;
-  imagem: File;
+  imagem: FileList;
   descricao: string;
 }
 
 const schema = yup.object().shape({
   titulo: yup.string().required(),
   descricao: yup.string().required(),
+  imagem: yup.mixed(),
 });
 
 function FormularioPostagem() {
@@ -24,8 +25,15 @@ function FormularioPostagem() {
   const navigate = useNavigate();
 
   function handlePostagem(values: registerPost) {
+    console.log(values);
+
+    const formData = new FormData(); 
+    formData.append("titulo", values.titulo); 
+    formData.append("descricao", values.descricao);
+    formData.append("imagem", values.imagem[0]); 
+
     axiosInstance
-      .post("publicacao/", values)
+      .post("publicacao/", formData)
       .then((response) => {
         navigate("/feed/");
       })
@@ -43,44 +51,40 @@ function FormularioPostagem() {
         role="dialog"
         aria-labelledby="modalalerttitle"
       >
-        <form
-          action=""
-          className=""
-          onSubmit={handleSubmit(handlePostagem)}
-        >
+        <form action="" className="" onSubmit={handleSubmit(handlePostagem)}>
           <div className="br-modal-header">
             <div className="modal-title" id="modalalerttitle">
               Publicação
             </div>
           </div>
           <div className="br-modal-body">
-              <div className="mb-3">
-                <div className="br-input small">
-                  <label htmlFor="input-icon-small">Título</label>
-                  <div className="input-group">
-                    <div className="input-icon">
-                      <i className="fas fa-pen" aria-hidden="true"></i>
-                    </div>
-                    <input
-                      className="small"
-                      id="titulo"
-                      type="text"
-                      placeholder="Escreva o título"
-                      {...register("titulo", { required: true })}
-                    />
+            <div className="mb-3">
+              <div className="br-input small">
+                <label htmlFor="input-icon-small">Título</label>
+                <div className="input-group">
+                  <div className="input-icon">
+                    <i className="fas fa-pen" aria-hidden="true"></i>
                   </div>
+                  <input
+                    className="small"
+                    id="titulo"
+                    type="text"
+                    placeholder="Escreva o título"
+                    {...register("titulo", { required: true })}
+                  />
                 </div>
               </div>
-              <div className="br-textarea">
-                <label htmlFor="textarea-id1">Texto</label>
-                <textarea
-                  id="descricao"
-                  placeholder="Digite seu texto"
-                  {...register("descricao", { required: true })}
-                ></textarea>
-              </div>
+            </div>
+            <div className="br-textarea">
+              <label htmlFor="textarea-id1">Texto</label>
+              <textarea
+                id="descricao"
+                placeholder="Digite seu texto"
+                {...register("descricao", { required: true })}
+              ></textarea>
+            </div>
 
-              <input type="file" id="imagem" name="filename" {...register("imagem", { required: true })}/>
+            <input type="file" id="imagem" {...register("imagem")} />
           </div>
           <div className="br-modal-footer justify-content-end">
             <button className="br-button primary ml-2" type="submit">

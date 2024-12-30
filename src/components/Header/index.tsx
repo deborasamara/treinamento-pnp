@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import useAuth from "../../states/authUser";
+import { Link } from "react-router-dom";
 
 function Header() {
-  const { user, isAuthenticated, login, logout } = useAuth();
+  const { user, isAuthenticated, nome} = useAuth();
 
-  useEffect(()=>{
-    console.log("Usuário: ",user);
-    console.log("Autenticado?: ", isAuthenticated);
-  }, [user, isAuthenticated]);
+  useEffect(() => {
+    console.log("Usuário: ", user);
+    console.log("Nome: ", nome);
+    console.log("Autenticado?:", isAuthenticated);
+  }, [user, nome, isAuthenticated]);
 
   return (
     <>
@@ -25,122 +27,118 @@ function Header() {
             </div>
 
             {isAuthenticated ? (
-            <div className="header-actions">
-              <div className="header-links dropdown">
-                <button
-                  className="br-button circle small"
-                  type="button"
-                  data-toggle="dropdown"
-                  aria-label="Abrir Acesso Rápido"
-                >
-                  <i className="fas fa-ellipsis-v" aria-hidden="true"></i>
-                </button>
-                <div className="br-list">
-                  <div className="header">
-                    <div className="title">Acesso Rápido</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="header-links dropdown">
-                <button
-                  className="br-button circle small"
-                  type="button"
-                  data-toggle="dropdown"
-                  aria-label="Abrir Acesso Rápido"
-                >
-                  <i className="fas fa-ellipsis-v" aria-hidden="true"></i>
-                </button>
-                <div className="br-list">
-                  <div className="header">
-                    <div className="title">Acesso Rápido</div>
-                  </div>
-                  <a className="br-item" href="javascript:void(0)">
-                    Publicar
-                  </a>
-                  <a className="br-item" href="javascript:void(0)">
-                    Ver feed
-                  </a>
-                </div>
-              </div>
-
-              <div>
-                <button
-                  className="br-sign-in"
-                  type="button"
-                  id="avatar-dropdown-trigger"
-                  data-toggle="dropdown"
-                  data-target="avatar-menu"
-                  aria-label="Olá, Fulano"
-                  style={{
-                    height: "auto",
-                    padding: "var(--spacing-scale-base)",
-                  }}
-                >
-                  <span className="br-avatar" title="Fulano da Silva">
-                    <span className="content bg-orange-vivid-30 text-pure-0">
-                      F
-                    </span>
-                  </span>
-                  <span className="ml-2 text-gray-80 text-weight-regular">
-                    Olá, <span className="text-weight-semi-bold">Fulano</span>
-                  </span>
-                  <i className="fas fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <div
-                  class="br-list"
-                  id="avatar-menu"
-                  hidden="hidden"
-                  role="menu"
-                  aria-labelledby="avatar-dropdown-trigger"
-                >
-                  <a
-                    className="br-item"
-                    href="javascript:void(0)"
-                    role="menuitem"
-                  >
-                    Dados pessoais
-                  </a>
-                  <a
-                    className="br-item"
-                    href="javascript:void(0)"
-                    role="menuitem"
-                  >
-                    Privacidade
-                  </a>
-                  <a
-                    className="br-item"
-                    href="javascript:void(0)"
-                    role="menuitem"
-                  >
-                    Notificações
-                  </a>
-                  <a
-                    className="br-item"
-                    href="javascript:void(0)"
-                    role="menuitem"
-                  >
-                    Perguntas frequentes
-                  </a>
-                </div>
-              </div>
-            </div>
-            ):(
-            <div className="header-actions">
-              <div className="header-login">
-                <div className="header-sign-in">
+              <div className="header-actions">
+                <div className="header-links dropdown">
                   <button
-                    className="br-sign-in small"
+                    className="br-button circle small"
                     type="button"
-                    data-trigger="login"
+                    data-toggle="dropdown"
+                    aria-label="Abrir Acesso Rápido"
                   >
-                    <i className="fas fa-user" aria-hidden="true"></i>
-                    <span className="d-sm-inline">Entrar</span>
+                    <i className="fas fa-ellipsis-v" aria-hidden="true"></i>
                   </button>
+                  <div className="br-list">
+                    <div className="header">
+                      <div className="title">Acesso Rápido</div>
+                    </div>
+                  </div>
                 </div>
-                <div className="header-avatar"></div>
+
+                <div className="header-links dropdown">
+                  <button
+                    className="br-button circle small"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-label="Abrir Acesso Rápido"
+                  >
+                    <i className="fas fa-ellipsis-v" aria-hidden="true"></i>
+                  </button>
+                  <div className="br-list">
+                    <div className="header">
+                      <div className="title">Acesso Rápido</div>
+                    </div>
+                    <Link to="/publicar" className="br-item">Publicar</Link>
+                    <Link to="/feed" className="br-item">Ver feed</Link>
+                  </div>
+                </div>
+
+                <div>
+                  <button
+                    className="br-sign-in"
+                    type="button"
+                    id="avatar-dropdown-trigger"
+                    data-toggle="dropdown"
+                    data-target="avatar-menu"
+                    aria-label="Olá, Fulano"
+                    style={{
+                      height: "auto",
+                      padding: "var(--spacing-scale-base)",
+                    }}
+                  >
+                    <span className="br-avatar" title="Fulano da Silva">
+                      <span className="content bg-orange-vivid-30 text-pure-0">
+                        F
+                      </span>
+                    </span>
+                    <span className="ml-2 text-gray-80 text-weight-regular">
+                      Olá, <span className="text-weight-semi-bold">{nome}</span>
+                    </span>
+                    <i className="fas fa-caret-down" aria-hidden="true"></i>
+                  </button>
+                  <div
+                    class="br-list"
+                    id="avatar-menu"
+                    hidden="hidden"
+                    role="menu"
+                    aria-labelledby="avatar-dropdown-trigger"
+                  >
+                    <a
+                      className="br-item"
+                      href="javascript:void(0)"
+                      role="menuitem"
+                    >
+                      Dados pessoais
+                    </a>
+                    <a
+                      className="br-item"
+                      href="javascript:void(0)"
+                      role="menuitem"
+                    >
+                      Privacidade
+                    </a>
+                    <a
+                      className="br-item"
+                      href="javascript:void(0)"
+                      role="menuitem"
+                    >
+                      Notificações
+                    </a>
+                    <a
+                      className="br-item"
+                      href="javascript:void(0)"
+                      role="menuitem"
+                    >
+                      Perguntas frequentes
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="header-actions">
+                <div className="header-login">
+                  <div className="header-sign-in">
+                    <button
+                      className="br-sign-in small"
+                      type="button"
+                      data-trigger="login"
+                    >
+                      <i className="fas fa-user" aria-hidden="true"></i>
+                      <span className="d-sm-inline">Entrar</span>
+                    </button>
+                  </div>
+                  <div className="header-avatar"></div>
+                </div>
+              </div>
             )}
           </div>
           <div className="header-bottom">

@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../services/axiosInstance";
-import * as yup from 'yup';
+import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import {yupResolver} from "@hookform/resolvers/yup"
-import useAuth from "./useAuth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import useAuth from "../../states/authUser";
 
 interface LoginForm {
   username: string;
@@ -16,18 +16,26 @@ const schema = yup.object().shape({
 });
 
 function FormularioLogin() {
-  const { register, handleSubmit, reset} = useForm({
+  const { register, handleSubmit, reset } = useForm({
     resolver: yupResolver(schema),
   });
   const navigate = useNavigate();
-  
+  const { login } = useAuth();
 
   function handleLogin(values: LoginForm) {
     axiosInstance
       .post("login/", values)
       .then((response) => {
         // Manipular a resposta e guardar o token de acesso que vai ser importante depois
-        navigate("/feed");
+        const token = response.data.access;
+
+        if (token) {
+          // se existir um token
+          login(token); // passa o token para a função de login do arquivo do zustand
+          navigate("/feed");
+        } else {
+          console.error("Token não retornado pelo backend.");
+        }
       })
       .catch((err) => {
         console.error(err);

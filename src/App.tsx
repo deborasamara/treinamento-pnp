@@ -10,18 +10,18 @@ import Feed from "./pages/Feed";
 function App() {
   return (
     <>
-      <Header></Header>
-      <main className="container" >
-        <BrowserRouter>
+      <BrowserRouter>
+        <Header></Header>
+        <main className="container">
           <Routes>
             <Route path="/cadastrar" element={<Cadastro />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/publicacoes" element={<Publicar/>} />
-            <Route path="/post" element={<Post/>} />
-            <Route path="/feed" element={<Feed/>} />
+            <Route path="/publicar" element={<Publicar />} />
+            <Route path="/post" element={<Post />} />
+            <Route path="/feed" element={<Feed />} />
           </Routes>
-        </BrowserRouter>
-      </main>
+        </main>
+      </BrowserRouter>
     </>
   );
 }

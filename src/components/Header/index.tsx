@@ -10,12 +10,17 @@ function Header() {
 
   const { user, isAuthenticated, nome } = useAuth();
   const [menuVisible, setMenuVisible] = useState(false);
+  const { logout } = useAuth();
 
   useEffect(() => {
     console.log("Usuário: ", user);
     console.log("Nome: ", nome);
     console.log("Autenticado?:", isAuthenticated);
   }, [user, nome, isAuthenticated]);
+
+  function handleLogout(){
+    logout();
+  }
 
   return (
     <>
@@ -125,7 +130,7 @@ function Header() {
                       >
                         Exemplo de alguma coisa
                       </a>
-                      <Link to="/login" className="br-item" role="menuitem">
+                      <Link to="/login" className="br-item" role="menuitem"  onClick={handleLogout}>
                         Sair
                       </Link>
                     </div>

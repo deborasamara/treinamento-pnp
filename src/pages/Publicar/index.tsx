@@ -14,7 +14,7 @@ function Postagem() {
           <li className="crumb" data-active="active">
             <i className="icon fas fa-chevron-right"></i>
             <span tabIndex="0" aria-current="page">
-              Página atual
+              Publicar
             </span>
           </li>
         </ol>

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 function Header() {
   function clickButton() {
-    console.log("cliquei aqui");
     setMenuVisible(!menuVisible);
   }
 
@@ -19,6 +18,7 @@ function Header() {
   }, [user, nome, isAuthenticated]);
 
   function handleLogout(){
+    clickButton();
     logout();
   }
 

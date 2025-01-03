@@ -17,7 +17,7 @@ function App() {
             <Route path="/cadastrar" element={<Cadastro />} />
             <Route path="/login" element={<Login />} />
             <Route path="/publicar" element={<Publicar />} />
-            <Route path="/post" element={<Post />} />
+            <Route path="/post/:id" element={<Post />} />
             <Route path="/feed" element={<Feed />} />
           </Routes>
         </main>

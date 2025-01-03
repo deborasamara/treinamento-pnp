@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../services/axiosInstance";
+import axiosBase from "../../services/axiosBase";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,6 +29,7 @@ function FormularioLogin() {
       .then((response) => {
         // Manipular a resposta e guardar o token de acesso que vai ser importante depois
         const token = response.data.access;
+        localStorage.setItem("authToken", response.data.access)
 
         if (token) {
           // se existir um token
@@ -93,7 +95,7 @@ function FormularioLogin() {
             </div>
           </div>
           <div className="br-modal-footer justify-content-end">
-            <button className="br-button secondary" type="button">
+            <button className="br-button secondary" type="button" onClick={() => reset()}>
               Limpar
             </button>
             <button className="br-button primary ml-2" type="submit">

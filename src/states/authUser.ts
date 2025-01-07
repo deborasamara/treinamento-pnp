@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import jwt_decode from "jwt-decode"; // Importa jwt-decode
 
 type userStore = {
   user: string | null;

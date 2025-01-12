@@ -82,7 +82,6 @@ function PostAberto() {
             </div>
           </div>
         </div>
-        <Comentario></Comentario>
       </div>
     </>
   );

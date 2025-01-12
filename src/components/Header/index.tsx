@@ -93,13 +93,13 @@ function Header() {
                   >
                     <span className="br-avatar" title="Fulano da Silva">
                       <span className="content bg-orange-vivid-30 text-pure-0">
-                        F
+                        {nome.charAt(0)}
                       </span>
                     </span>
                     <span className="ml-2 text-gray-80 text-weight-regular">
                       Olá,{" "}
                       <span className="text-weight-semi-bold">
-                        {nome || "Fulano"}
+                        {nome.split(" ")[0] || "Fulano"}
                       </span>
                     </span>
                     {menuVisible ? (

@@ -1,14 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import jwt_decode from "jwt-decode"; // Importa jwt-decode
+import {jwtDecode }from "jwt-decode";
 
 type userStore = {
   user: string | null;
   nome: string | null;
   token: string | null;
   isAuthenticated: boolean;
-  login: (username: string, token:string) => void;
+  login: (token: string) => void;
   logout: () => void;
+  setNome: (nome: string) => void;
 };
 
 const useAuth = create(
@@ -18,13 +19,21 @@ const useAuth = create(
       token: null,
       nome: null,
       isAuthenticated: false,
-      login: (username, token) =>
-        set({ user: username, token, isAuthenticated: true }),
-        setNome: (nome) => set({ nome }),
-      logout: () => set({ user: null, nome: null, token:null, isAuthenticated: false }),
+      login: (token) => {
+        try {
+          console.log(token);
+          const decodedToken = jwtDecode<userStore>(token);
+          set({nome: decodedToken.nome, user: decodedToken.user, token, isAuthenticated: true});
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      setNome: (nome) => set({ nome }),
+      logout: () =>
+        set({ user: null, nome: null, token: null, isAuthenticated: false }),
     }),
     {
-      name: "auth-storage", 
+      name: "auth-storage",
     }
   )
 );
